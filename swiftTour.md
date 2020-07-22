@@ -1,6 +1,6 @@
-# 스위프트 여행
+# 스위프트 여행 
 
-
+**이 문서는 [a swift tour](https://docs.swift.org/swift-book/GuidedTour/GuidedTour.html) 를 보고 정리한 글입니다.**
 
 새로운 언어로 작성하는 첫번째 프로그램의 전통적인 제안들은 **Hello, world!** 를 출력 해보는 것이다.
 
