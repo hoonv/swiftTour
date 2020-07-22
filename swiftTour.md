@@ -204,6 +204,56 @@ default:
 >
 > default 문을 제거 하면 무슨 에러가 발생 되는가?
 
+여기서 let이 어떻게 사용되었는지 주목하라. let where은 패턴과 결합하여 조건을 추가하는 역할이다.
+
+Switch case와 패턴이 맞으면 그 문이 실행되고 나서 그 프로그램은 스위치 문을 탈출한다. c언어와 달리 다음 case를 실행하는 것이 아니라 바로 탈출한다 그러므로 break를 붙일 필요가 없다. 
+
+
+
+너는 dictionary에서도 for in을 사용 할 수 있다 각각의 요소에 접근할 때는 key-value 쌍으로 접근 하면 된다. 딕셔너리는 순서가 없는 집합이므로 접근할때는 임의의 순서로 접근하게 된다.
+
+```swift
+let interestingNumbers = [
+    "Prime": [2, 3, 5, 7, 11, 13],
+    "Fibonacci": [1, 1, 2, 3, 5, 8],
+    "Square": [1, 4, 9, 16, 25],
+]
+var largest = 0
+for (kind, numbers) in interestingNumbers {
+    for number in numbers {
+        if number > largest {
+            largest = number
+        }
+    }
+}
+print(largest)
+// Prints "25"
+```
+
+> EXPERIMENT
+>
+> 어떤 종류의 원소가 가장 큰지 추적하기 위해 또 다른 변수를 추가해라.
+
+
+
+코드블록을 반복 하기 위해서는 `while` 문을 사용하라 반복문이 적어도 한번 돌아가는 것을 확신 한다면 `repeat-while` 문을 사용하면 된다. 
+
+```swift
+var n = 2
+while n < 100 {
+    n *= 2
+}
+print(n)
+// Prints "128"
+
+var m = 2
+repeat {
+    m *= 2
+} while m < 100
+print(m)
+// Prints "128"
+```
+
 
 
 
