@@ -165,6 +165,43 @@ var sortedNumbers = numbers.sorted{ $0 < $1 }
 print(sortedNumbers)
 
 
+class NamedShape {
+    var numberOfSides: Int = 0
+    var name: String
+
+    init(name: String) {
+        self.name = name
+    }
+
+    func simpleDescription() -> String {
+        return "A shape with \(numberOfSides) sides."
+    }
+}
+
+
+class circle: NamedShape {
+    var radius: Double
+    init(name: String, radius: Double) {
+        self.radius = radius
+        super.init(name: name)
+        self.numberOfSides = 0
+    }
+    
+    func area() -> Double {
+        return radius * radius * 3.14
+    }
+    
+    override func simpleDescription() -> String {
+        return "Hello i'm circle \(name)"
+    }
+    
+}
+
+var c = circle(name: "hehe", radius : 1)
+print(c.area())
+print(c.simpleDescription())
+
+
 
 
 

@@ -400,9 +400,120 @@ print(sortedNumbers)
 
 
 
+## Objects and Classes
 
+class 이름 으로 클래스를 생성해라. 속성을 선언 하는 것은 상수나 변수를 선언하는 것과 똑같은 방법이다. 클래스의 문맥 안에 있다는 것만 빼면 함수나 메쏘드를 선언하는것 또한 마찬가지의 방법이다.
 
+``` swift
+class Shape {
+  var numberOfSides = 0
+  func simpleDescription() -> String {
+    return "A shape with \(numberOfsides) sides."
+  }
+}
+```
 
+> EXPERIMENT
+>
+> let 키워드로 상수를 추가해라 그리고 그것을 취하는 메쏘드 또 추가해보아라
 
+클래스 이름에 괄호를 추가해서 객체를 만들어보아라  클래스 안에 속성이나 메소드의 접근하기 위해야 `.` 문법을 사용하라.
 
+``` swift
+var shape = Shape()
+shape.numberOfSides = 7
+var shapeDescription = shape.simpleDescription()
+```
 
+shape클래스는 중요한 것을 빼먹었다. 클래스는 객체로 생성될때 초기화를 해야하는데 이때 `init` 을 사용하라. 
+
+``` swift
+class NamedShape {
+    var numberOfSides: Int = 0
+    var name: String
+
+    init(name: String) {
+        self.name = name
+    }
+
+    func simpleDescription() -> String {
+        return "A shape with \(numberOfSides) sides."
+    }
+}
+```
+
+name이라는 속성과 name이라는 인자를 구별하기 위해 `self` 가 사용 된 것을 인지하라. 이니셜라이져의 인자들은 너가 객체를 만들때 함수를 부르는것 처럼 전달된다. 모든 속성들은 값이 할당 되어야한다. 선언할때 던지 아니면 이니셜라이져를 통해서든지 초기화가 되어야한다.
+
+`deinit` 을 사용하라 디이니셜라이즈를 생성하기위해. 만약 객체가 할당 해제될 때 너가 몇가지 청소가 필요하다면 `deinit` 을 사용하라.
+
+하위 클래스는 그들의 상위클래스의 이름을 그들의 이름 뒤에 콜론으로 구별하여 붙인다. 표준 루트 클래스의 하위 글래스는 어떠한 요구사항도 필요없다 그러니 너는 상위 클래스를 필요하다면 생략하거나 포함 할 수 있다. 
+
+상위클래스트 메소드를 하위 클래스에서 다시 작성하는 경우엔 `override` 키워드를 붙인다. 만약 붙이지 않는다면 컴파일 에러가 발생할 것이다. 또한 컴파일러는 제대로 override하지 않는 경우도 잡아낸다. 
+
+``` swift
+class Square: NamedShape {
+    var sideLength: Double
+
+    init(sideLength: Double, name: String) {
+        self.sideLength = sideLength
+        super.init(name: name)
+        numberOfSides = 4
+    }
+
+    func area() -> Double {
+        return sideLength * sideLength
+    }
+
+    override func simpleDescription() -> String {
+        return "A square with sides of length \(sideLength)."
+    }
+}
+let test = Square(sideLength: 5.2, name: "my test square")
+test.area()
+test.simpleDescription()
+```
+
+> EXPERIMENT
+>
+> circle이라는 또 다른 하위 클래스를 생성해라 이것은 이름과 반지름을 요구한다. 그리고 area() 와 simpleDescription()을 실행해라.
+
+추가로 저장된 속성에 대해서 속성은 getter 와 setter를 가질 수 있다.
+
+``` swift
+class EquilateralTriangle: NamedShape {
+    var sideLength: Double = 0.0
+
+    init(sideLength: Double, name: String) {
+        self.sideLength = sideLength
+        super.init(name: name)
+        numberOfSides = 3
+    }
+
+    var perimeter: Double {
+        get {
+            return 3.0 * sideLength
+        }
+        set {
+            sideLength = newValue / 3.0
+        }
+    }
+
+    override func simpleDescription() -> String {
+        return "An equilateral triangle with sides of length \(sideLength)."
+    }
+}
+var triangle = EquilateralTriangle(sideLength: 3.1, name: "a triangle")
+print(triangle.perimeter)
+// Prints "9.3"
+triangle.perimeter = 9.9
+print(triangle.sideLength)
+// Prints "3.3000000000000003"
+```
+
+perimeter의 setter에서 새로운 값은 newvalue를 의미한다. 너는 명백한 이름을 set뒤에 괄호에 제공할 수 있다. 
+
+EquilateralTriangle 클래스가 초기화 될때 다음과 같은 3가지 단계로 이뤄진다.
+
+1. 서브클래스에서 선언된 속성값 초기화
+2. 상위클래스의 초기화
+3. 상위클래스에서 선언된 변수 변경 그리고 추가적인 methods, getter, setters등과 같은 작업 완료
