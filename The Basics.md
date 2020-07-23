@@ -95,6 +95,38 @@ let 🐶🐮 = "dogcow"
 var `break` = 10
 ```
 
+너는 변수에 대해서는 그 안에 값을 바꿀 수 있다.
+
+```swift
+var friendlyWelcome = "Hello!"
+friendlyWelcome = "Bonjour!"
+// friendlyWelcome is now "Bonjour!"
+```
+
+변수와 달리 상수는 한번 값을 정하면 다시는 바꿀 수 없다. 만약 바꾸려 시도한다면 에러가 발생 할 것이다.
+
+```swift
+let languageName = "Swift"
+languageName = "Swift++"
+// This is a compile-time error: languageName cannot be changed.
+```
+
+
+
+## Comments
+
+## Semicolons
+
+## Integers
+
+인티져는 분수가 아닌 모든 숫자이다. 예를들면 42 또는 -23과 같다. 정수는 signed(양수, 0, 음수) 나 unsigned(0, 양수)이다
+
+스위프트는 signed and unsigned 정수를 8, 16, 32, 64비트의 형태로 제공한다. 이 정수들은 C와 비슷한 네이밍 규칙을 따른다. 8-bit unsigned 정수는 UInt8로 표현하고 32-bit signed는 Int32로 표현한다.  스위프트의 모든 타입은 대문자로 시작한다.
+
+#### Integer Bounds
+
+너는 각각의 정수 타입에 min, max속성 값을 통해 최솟값과 최댓값을 접근 할 수 있다. 
+
 
 
 
