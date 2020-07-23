@@ -256,6 +256,150 @@ print(m)
 
 
 
+너는 `..<` 구문을 통해 index range를 만들 수 있다 파이썬 range(0,4) 0..<4 와 같은 의미이다.
+
+```swift
+var total = 0
+for i in 0..<4 {
+    total += i
+}
+print(total)
+// Prints "6"
+```
+
+맨 끝 값을 포함 시키지 않으려면 `..<` 을 사용하고 맨 끝값도 포함시키고 싶다면  <을 빼고 `...` 을 사용하면 된다. 
+
+
+
+## Functions and Closures
+
+함수를 선언하기 위해서는 `func` 키워드를 사용하라.  함수의 이름을 적고 그것의 인수를 괄호 안에 넣어서 함수를 호출하라 `->` 을 이용하여 파라미터 이름과 함수의 리턴 타입을 구분하라.
+
+```swift
+func greet(person: String, day: String) -> String {
+    return "Hello \(person), today is \(day)."
+}
+greet(person: "Bob", day: "Tuesday")
+
+```
+
+> EXPERIMENT
+>
+> Day 파라미미터를 지우고 오늘의 점심 스페셜 파라미터를 추가해보자
+
+기본적으로 함수를 호출 할때는 어떠한 값이 어떠한 파라미터인지를 알기 위해 앞에 파라미터의 이름을 적고 전달할 값을 적어줘야한다. 이것이 번거로운 상황이 있을 수도 있는데 이때는 `_` 을 통해 라벨을 생략 할 수도 있고 라벨 앞에 별명을 달아 줄 수도 있다. 
+
+```swift
+func greet(_ person: String, on day: String) -> String {
+    return "Hello \(person), today is \(day)."
+}
+greet("John", on: "Wednesday")
+```
+
+
+
+많은 값들을 리턴하고 싶다면 튜플을 사용하라 튜플의 요소는 이름이나 숫자로 접근 할 수 있다 
+
+``` swift
+func calculateStatistics(scores: [Int]) -> (min: Int, max: Int, sum: Int) {
+    var min = scores[0]
+    var max = scores[0]
+    var sum = 0
+
+    for score in scores {
+        if score > max {
+            max = score
+        } else if score < min {
+            min = score
+        }
+        sum += score
+    }
+
+    return (min, max, sum)
+}
+let statistics = calculateStatistics(scores: [5, 3, 100, 3, 9])
+print(statistics.sum)
+// Prints "120"
+print(statistics.2)
+// Prints "120"
+```
+
+
+
+함수는 중첩 될 수 있다. 중첩된 함수는 그 밖에 함수에서 선언된 변수에 접근 할 수 있다. 너는 중첩 함수를 복잡하거나 긴 함수 안에 코드를 조작하기 위해 사용 할 수 있다.
+
+``` swift
+func returnFifteen() -> Int {
+    var y = 10
+    func add() {
+        y += 5
+    }
+    add()
+    return y
+}
+returnFifteen()
+```
+
+함수는 first-class type 인데 이것은 어떠한 함수의 반환값이 될 수도 있고 변수에 할당이 될 수도 있다는 의미이다. 
+
+``` swift
+func makeIncrementer() -> ((Int) -> Int) {
+    func addOne(number: Int) -> Int {
+        return 1 + number
+    }
+    return addOne
+}
+var increment = makeIncrementer()
+increment(7)
+```
+
+함수는 또 다른 함수를 파라미터로 받을 수도 있다.
+
+``` swift
+func hasAnyMatches(list: [Int], condition: (Int) -> Bool) -> Bool {
+    for item in list {
+        if condition(item) {
+            return true
+        }
+    }
+    return false
+}
+func lessThanTen(number: Int) -> Bool {
+    return number < 10
+}
+var numbers = [20, 19, 7, 12]
+hasAnyMatches(list: numbers, condition: lessThanTen)
+```
+
+함수는 사실 클로져의 특별한 경우이다. ~~(: blocks of code that can be called later.)?~~  클로져의 코드는 변수나 클로져가 생성 되었던 곳에서 접근가능한 함수 같은 것에 접근한다. 심지어 클로져가 실행될때 다른 스코프에 있어도 접근가능하다. 너는 이미 중첩된 함수를 보았다. 너는 클로져를 중괄호로 이름을 둘러 싸는 것없이 만들 수 있다. `in`을 알규먼트와 리턴타입을 바디와 구별하기 위해 사용하라.
+
+``` swift
+numbers.map({ (number: Int) -> Int in
+            let result = 3 * number
+            return result
+})
+```
+
+> EXPERIMENT 
+>
+> 홀수에 대해서 0을 반환하도록 다시 작성해보자.
+
+너는 클로져를 좀 더 간결히 작성하는데 몇가지 옵션이 있다. 클로져의 타입이 콜백함수와 같이 이미 알려져 있을때 너는 이것의 파라미터 타입이나 리턴타입 또는 둘 다 생략할 수 있다. 한 줄 클로져는 그것이 리턴이라는 것을 암시한다.
+
+``` swift
+let mappedNumbers = numbers.map({ number in 3 * number})
+print(mappedNumbers)
+```
+
+너는 파라미터를 이름 대신 숫자로 접근할 수도 있다. 이 접근은 특히 매우 짧은 클로져에 대해 매우 유용하다. ~~함수의 마지막 인자로 전달된 클로져는 괄호 후에 즉시 드러난다?~~ 클로져가 어떠한 함수의 유일한 알규먼트일때 괄호는 생략될 수 있다. 
+
+``` swift
+let sortedNumbers = numbers.sorted( $0 > $1 )
+print(sortedNumbers)
+```
+
+
+
 
 
 

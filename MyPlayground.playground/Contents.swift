@@ -85,11 +85,85 @@ let interestingNumbers = [
     "Square": [1, 4, 9, 16, 25],
 ]
 
-var largest = 0
-for (kind, numbers) in interestingNumbers {
-    print(kind, numbers)
+//var largest = 0
+//for (kind, numbers) in interestingNumbers {
+//    print(kind, numbers)
+//}
+//print(largest)
+
+for i in 1...4 {
+    print(i)
 }
-print(largest)
+
+
+func greet (_ person: String, on day: String) -> String {
+    return "Hello \(person), today is \(day)"
+}
+
+
+let temp: String = greet("adf", on: "sdf")
+print(temp)
+
+
+func calculateStatistics(scores: [Int]) -> (min: Int, max: Int, sum: Int) {
+    var min = scores[0]
+    var max = scores[0]
+    var sum = 0
+
+    for score in scores {
+        if score > max {
+            max = score
+        } else if score < min {
+            min = score
+        }
+        sum += score
+    }
+
+    return (min, max, sum)
+}
+let statistics = calculateStatistics(scores: [5, 3, 100, 3, 9])
+print(statistics.sum)
+// Prints "120"
+print(statistics.1)
+// Prints "120"
+
+
+func returnfifteen() -> Int {
+    var y : Int = 5
+    
+    func add() {
+        y += 10
+    }
+    add()
+    return y
+}
+
+returnfifteen()
+
+func makeIncrementer() -> ((Int) -> Int) {
+    func add(number: Int) -> Int {
+        return 1 + number
+    }
+    return add
+}
+
+var temp1 = makeIncrementer()
+temp1(7)
+
+
+var numbers = [20, 19, 7, 12]
+
+numbers.map({ (number: Int) -> Int in
+    var result = number
+    if number % 2 == 1 {
+        result = 0
+    }
+    return result
+})
+
+var sortedNumbers = numbers.sorted{ $0 < $1 }
+print(sortedNumbers)
+
 
 
 
