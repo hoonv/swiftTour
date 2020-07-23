@@ -398,7 +398,9 @@ let sortedNumbers = numbers.sorted( $0 > $1 )
 print(sortedNumbers)
 ```
 
-
+> ADDITION
+>
+> swift에서 클로져는 javascript와는 조금 다른 성격을 지닌다. swift에서는 익명함수라고 생각하면 된다. 
 
 ## Objects and Classes
 
