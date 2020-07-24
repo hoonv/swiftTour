@@ -40,6 +40,24 @@ let pi = Double(three) + pointonefourone
 print(pi)
 
 
-let possibleNumber = "hello"
+let possibleNumber = "123"
 let convertedNumber = Int(possibleNumber)
-print(convertedNumber)
+
+
+if let actualNumber = Int(possibleNumber) {
+    print("실제 값은 \(actualNumber)입니다")
+} else {
+    print("인트형으로 변환 될 수 없습니다")
+}
+
+let thepossibleString: String? = "this is optionalString"
+let theforcedString: String = thepossibleString!
+print(thepossibleString)
+print(theforcedString)
+
+let assumedString: String! = "an implicity unwrapped optional string."
+let implicityString: String = assumedString
+let implicityString1 = assumedString
+print(assumedString)
+print(implicityString)
+print(implicityString1)

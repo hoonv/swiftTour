@@ -388,5 +388,125 @@ var surveyAnswer: String?
 >
 > 스위프트의 nil은 Objective-C의 nil과는 다르다 Objective-C의 nil은 존재하지 않는 객체의 포인터이다. 스위프트에서는 포인터가 아니라, 특정한 타입의 값의 부재이다. 객체 뿐만 아니라 어떤 타입이던 옵셔널은 nil을 설정 할 수 있다
 
-#### 
+#### If Statements and Forced Unwrapping
+
+너는 옵셔널이 값을 가지고 있는지 아닌지 알기 위해 nil과 비교하며 if문을 사용할 수 있다. 너는 같다 라는 의미인 "==" 연산자를 사용할 수있고 "!=" 같지 않다라는 의미인 이 연산자를 사용 할 수 있다.
+
+만약 옵셔널이 값을 가지고 있다면 이것은 nil과 같지 않을 것이다,
+
+```swift
+if convertedNumber != nil {
+    print("convertedNumber contains some integer value.")
+}
+// Prints "convertedNumber contains some integer value."
+```
+
+너가 옵셔널이 값을 가지고 있다고 확신한다면 너는 느낌표(!)를 변수이름 뒤에 추가함으로써 그 안에 있는 값을 가져올 수 있다. 그 느낌표는 말한다. 나는 정확히 옵셔널이 값을 가지고 있는 것을 알아 그러니 값을 줘라고 말이다. 이것은 강제로 upwrap하는 방법이다.
+
+```swift
+if convertedNumber != nil {
+    print("convertedNumber has an integer value of \(convertedNumber!).")
+}
+// Prints "convertedNumber has an integer value of 123."
+```
+
+> NOTE
+>
+> 값이 존재하지 않는 옵셔널에 강제로 ! 로 랩을 푼다면 이것은 런타임에러를 발생시킬 것이다. force-unwrap할때는 항상 옵셔널이 non-nil이 아닌지 확인해라 
+
+
+
+#### Optional Binding
+
+너는 옵셔널이 값을 가지고 있는지 아닌지 알기 위해서 optional binding을 사용하라. 그렇다면 임시적인 상수나 변수에 담아 보관하라. Optional binding은 옵셔널안에 값이 있는지 if 와 while문에서 사용 할 수 있다. 그리고 값을 상수나 변수로 값을 추출하는데 이것이 하나의 액션으로 가능하다. 
+
+if문에서 optional binding은 다음과 같이 사용할 수 있다.
+
+```swift
+if let constantName = someOptional {
+  statments
+}
+```
+
+너는 possibleNumber를 강제로 랩을 푸는것이 아니라 옵셔널 바인딩으로 다시 작성 할 수있다. 
+
+```swift
+if let actualNumber = Int(possibleNumber) {
+    print("The string \"\(possibleNumber)\" has an integer value of \(actualNumber)")
+} else {
+    print("The string \"\(possibleNumber)\" could not be converted to an integer")
+}
+// Prints "The string "123" has an integer value of 123"
+```
+
+이 코드는 다음과 같이 읽힌다:
+
+만약 Int(possibleNumber)을 통해 번환된 옵셔널 Int가 값을 가지고 있다면, actualNumber라는 새로운 상수에 그 안에 들어있는 값을 설정해라
+
+만약 전환이 성공적으로 이루어진다면 actualNumber은 if문의 첫번째 브랜치에서 사용가능하게 된다. 이것은 이미 초기화가 되었기 때문에 느낌표를 사용하여 강제로 값을 가져올 필요가 없다. 이 예시에서 actualNumber은 쉽게 사용된다
+
+너는 상수와 변수 모두 optional binding을 통해 사용 가능하다. 만약 너가 actualNumber를 조작하길 원한다면 var 키워드를 통해 사용하면 된다. 그렇다면 변수로 만들어 질것이다.
+
+너는 너가 원한다면 컴마로 구분하여 하나의 if문 안에 많은 옵셔널 바인딩과 조건문들들 포함시킬 수 있다. 만약 어떠한 하나의 옵셔널 바인딩이 nil이거나 조건문이 false라면 if문은 false로 간주하고 실행되지 않을 것이다. 
+
+```swift
+if let firstNumber = Int("4"), let secondNumber = Int("42"), firstNumber < secondNumber && secondNumber < 100 {
+  print("\(firstNumber) < \(secondNumber) < 100")
+}
+```
+
+> NOTE
+>
+> 옵셔널 바인딩을 통해 생성된 상수나 변수는 그 if문의 바디 안에서만 존재한다 반대로 guard 문에서 생성된 상수나 변수는 가드 문 다음부터 가능하다.
+
+#### Implicitly Unwrapped Optionals
+
+위에서 설명했다시피 옵셔널은 값을 가지지 않는 것을 허용한다. 옵셔널은 if문과 함께 값의 존재를 확인 할 수 있다. 그리고 옵셔널 바인딩을 통해 옵셔널의 값을 가져올 수 있다.
+
+때때로 프로그램 구조에서 값이 처음에 설정이 되면 옵셔널은 항상 값을 가진다는 것은 명확하다. 이러한 경우에 옵셔널의 값이 있는지 체크하고 unwrap하는 과정을 제거하는 것은 꽤 유용할 것이다. 왜냐하면 항상 값을 가질 것이기 뗴문이다.
+
+이러한 종류의 옵셔널은 unwrapped 옵셔널이라고 함축적으로 정의된다. 너는 느낌표를 붙임으로서  함축적으로 옵셔널 변수를 펼수 있다. 사용할때 옵셔널 변수 뒤에 느낌표를 놓는것 보다 선언할때 타입 뒤에 놓는것이 좋다.
+
+함축적 언랩 옵셔널은 옵셔널의 값이 확실히 존재하고 계속 존재할것이라고 추정될때 유용하다. Implicitly unwrapped optionals의 주된 사용은 클래스를 초기화할때 사용한다. 
+
+implicitly unwrapped optional은 신뒤에서 일반적인 옵셔널이다? but can also be used like a non-optional value, without the need to unwrap the optional value each time it’s accessed. 다음의 예제가 옵셔널 스트링과 implicitly unwrapped optional 의 그 안에 값에 접근할때의 차이를 보여준다.
+
+``` swift 
+let possibleString: String? = "An optional string."
+let forcedString: String = possibleString! // requires an exclamation point
+
+let assumedString: String! = "An implicitly unwrapped optional string."
+let implicitString: String = assumedString // no need for an exclamation point
+```
+
+너는 `implicitly unwrapped optional ` 이 필요하다면 강제로 랩을 푸는 권한을 주는 것이라고 생각 할 수 있다.  너가 `implicitly unwrapped optional ` 을 사용할 때 스위프트는 처음에 이것을 일반적인 옵셔널 값으로 다루길 시도한다. 이것이 만약 일반적인 옵셔널 값처럼 사용 할 수 없다면 스위프트는 강제로 값을 꺼내온다. 위의 코드를 보면 옵셔널 값인 `assumedString` 은 `implicitString` 에 할당 되기 전ㄴ에 강제로 펼져졌다. 왜냐하면 `implicitString`은 옵셔널 타입이 아닌 명백한 스트링이기 때문이다. 밑에 코드를 보면 `optionalString` 은 명백한 타입이 아니므로 이것을 일반적인 옵셔널 밸류로 생각한다. 
+
+```swift
+let optionalString = assumedString
+// The type of optionalString is "String?" and assumedString isn't force-unwrapped.
+```
+
+만약 nil이 저장 되어있는  `implicitly unwrapped optional ` 를 강제로 펼치려 한다면 런타임 에러가 발생 될 것이다. 그 결과는 값을 가지고 있지 않은 일반적인 옵셔널을 강제로 열때와 마찬가지의 결과를 받을 것이다. 
+
+너는 `implicitly unwrapped optional ` 이 nil인지 아닌지 normal optional과 같은 방법으로 체크하면 된다 
+
+```swift
+if assumedString != nil {
+    print(assumedString!)
+}
+// Prints "An implicitly unwrapped optional string."
+```
+
+너는 또한 `implicitly unwrapped optional` 을 옵셔널 바인딩을 통해 하나의 명령어로 체크하고 펼쳐도 된다. 
+
+```swift
+if let definiteString = assumedString {
+    print(definiteString)
+}
+// Prints "An implicitly unwrapped optional string."
+```
+
+> NOTE
+>
+> Implicitly unwrapped optional이 nil값을 가질 가능성이 있다면 사용하지 마라. 만약 라이프 타임동안 nil인지 체크를해야한다면 일반적인 optional을 사용하라.
 
