@@ -510,3 +510,7 @@ if let definiteString = assumedString {
 >
 > Implicitly unwrapped optional이 nil값을 가질 가능성이 있다면 사용하지 마라. 만약 라이프 타임동안 nil인지 체크를해야한다면 일반적인 optional을 사용하라.
 
+## Error Handling
+
+## Assertions and Preconditions
+
