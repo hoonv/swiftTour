@@ -23,3 +23,23 @@ let uintmax = UInt32.max
 var int8 = 10
 var int16 = 10000
 print(int8+int16)
+
+let paddedDouble = 000123.456
+let oneMillion = 1_000_000
+let justOverOneMillion = 1_000_000.000_000_1
+
+let t1 = Int(15)
+
+let twoThousand: UInt16 = 2_000
+let one: UInt8 = 1
+let twoThousandAndOne = twoThousand + UInt16(one)
+
+let three = 3
+let pointonefourone = 0.141
+let pi = Double(three) + pointonefourone
+print(pi)
+
+
+let possibleNumber = "hello"
+let convertedNumber = Int(possibleNumber)
+print(convertedNumber)
