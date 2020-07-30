@@ -82,3 +82,57 @@ let lineWithIndentation = """
 print(lineWithIndentation)
 ```
 
+#### Special Characters in String Literals
+
+In [computer science](https://en.wikipedia.org/wiki/Computer_science), a **literal** is a notation for representing a fixed [value](https://en.wikipedia.org/wiki/Value_(computer_science)) in [source code](https://en.wikipedia.org/wiki/Source_code).
+
+먼저 리터럴이의 뜻을 알아보았다 리터럴이란 컴퓨터과학에서 특정한 값을 표기하는 표기법이라고 한다..
+
+스트링 리터럴은 그냥 문자열이라고 생각하자.. 
+
+문자열은 다음과 같은 특수 문자를 포함한다
+
+- escaped special characters \0 널 \\ 백슬래쉬 \t 탭 \n 개행  \\" \\' 등등
+- 임의의 유니코드 등등
+
+밑에 코드는 4가지의 특별한 문자에 대해 보여준다. wiseWords는 쌍따옴표가 있고 dollarSign blackHeart sparklingHeart는 유니코드 포맷을 갖고 있다.
+
+```swift
+let wiseWords = "\"Imagination is more important than knowledge\" - Einstein"
+// "Imagination is more important than knowledge" - Einstein
+let dollarSign = "\u{24}"        // $,  Unicode scalar U+0024
+let blackHeart = "\u{2665}"      // ♥,  Unicode scalar U+2665
+let sparklingHeart = "\u{1F496}" // 💖, Unicode scalar U+1F496
+
+```
+
+다중라인 문자열은 세개의 쌍따옴표를 사용하는데 다음과 같이 쌍따옴표 하나를 쓰고 여러개를 붙여서 쓸 수 있다. 
+
+```swift
+let threeDoubleQuotationMarks = """
+Escaping the first quotation mark \"""
+Escaping all three quotation marks \"\"\"
+"""
+
+```
+
+
+
+#### Extended String Delimiters
+
+확장된 문자 구분자
+
+문자열을 확장된 구분자 안에 배치하여 이러한  \t \n 특수 문자를 그들이 영향을 끼치지 않고 출력 할 수 있게 도와준다 너는 "" 문자열 밖에 #으로 감싸주면 된다. #""# 이러한 형태이다 그렇다면 그 안에 특수문자들은 발동을 안할 것이다 예를 들어 #"안녕하세요 \n 반갑습니다 "#는 개행없이 한줄에 출력이 될 것이다.
+
+
+
+만약에 이러한 문자열 안에서도 너가 특수문자가 영향을 끼치게 하려고 한다면 #을 다시 붙여저는 방식으로 그렇게 할 수 있다. 예를 들면 #"안녕하세요 \\#n 반갑습니다 "# 로 개행을 할 수 있다.
+
+확장된 구분자를 통해 생성된 문자열은 다중라인 문자열에서도 적영된다 너는 멀티라인에서 """을 사용 할 수 있다. 
+
+```swift
+let threeMoreDoubleQuotationMarks = #"""
+Here are three more double quotes: """
+"""#
+```
+
