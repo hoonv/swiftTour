@@ -50,9 +50,45 @@
 
 결국 스위프트에서 함수형 프로그래밍을 위한 가장 큰 도구? 수단은 클로져 이다. 먼저 클로져와 함수와 의 차이점을 알고 가야한다. 스위프트 docu를 보면 함수는 특정한 일을 수행하는 코드블록이다. 함수는 이름이 있어서 이름으로 불릴 수 있다. 클로져는 함수와 마찬가지로 특정한 일을 수행하는 코드블록이지만 이름이 없고 다른 언어에서 람다와 비슷하다. 사실 특징은 이름이 없는 함수인 익명함수라고 생각하면 되지만 사실 클로져의 생성 의미는 좀 더 함수형 프로그래밍을 위해 만들어졌다고 한다. 파라미터만 가지고 함수를 만들기 때문에 다른 스코프의 값은 변경 할 수 없기 때문이다. 사실 만들어질때 어느정도 컨텍스트를 갖고있어 순수함수가 아닐 위험성이 있지만 본래의 목적은 순수함수를 위해 만들어졌다고 한다. 
 
+
+
 클로저에 대한 기본적인 설명은 나중에 추가하고 먼저 공부한 escaping이라는 키워드에 대해 적어보겠다.
 
+``` swift
+var completionHandlers: [() -> Void] = []
 
+func withEscaping(completion: @escaping () -> Void) {
+    // 함수 밖에 있는 completionHandlers 배열에 해당 클로저를 저장
+    completionHandlers.append(completion)
+}
+
+func withoutEscaping(completion: () -> Void) {
+//    completionHandlers.append(completion) // Error!
+    completion()
+}
+
+class MyClass {
+    var x = 10
+    func callFunc() {
+        withEscaping { self.x = 100 }
+        withoutEscaping { x = 200 }
+    }
+}
+let mc = MyClass()
+mc.callFunc()
+print(mc.x)
+completionHandlers.first?()
+print(mc.x)
+
+```
+
+
+
+먼저 Myclass의 callFunc을 부르면 이스케이핑이 있는 함수와 없는 함수를 부른다. 이스캐이핑이라는 키워드가 의미하는건 탈출 가능하다라는 의미이다. 클로져 앞에 이스캐이핑을 붙여주면 이 클로져를 다른 스코프에서 사용 할 수 있다. 위의 예제에서는 completionHandler 전역변수가 클로져를 가져갔다. 이스케이핑이 없다면 이렇게 진행 할 수 없다. 
+
+
+
+그다음 이스캐이핑의 용도는 함수의 마지막에 실행되는 특징으로 서버에 데이터를 요청하는 비동기 함수를 처리하기 위해 사용된다. 서버에서 데이터를 받아온 다음 클로져가 실행이 되어서 클로져에서 데이터를 처리 할 수 있는 것이다. 
 
 
 
