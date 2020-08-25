@@ -14,3 +14,5 @@
 6. [Subscript](https://github.com/mildchae/swiftTour/blob/master/subscript.md)
 
 7. [Closure](https://github.com/mildchae/swiftTour/blob/master/closure.md)
+
+8. [Regular Expression](https://github.com/mildchae/swiftTour/blob/master/regularExpression.md)
