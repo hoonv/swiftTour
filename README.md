@@ -9,7 +9,7 @@
 
 4. [Strings and Chracters](https://github.com/mildchae/swiftTour/blob/master/Strings%20and%20Characters.md)
 
-5. [UnitText](https://github.com/mildchae/swiftTour/blob/master/Xcode%20UnitTest%20Usage.md)
+5. [UnitTest](https://github.com/mildchae/swiftTour/blob/master/Xcode%20UnitTest%20Usage.md)
 
 6. [Subscript](https://github.com/mildchae/swiftTour/blob/master/subscript.md)
 
